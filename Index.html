@@ -192,7 +192,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         `).join('') : 'Chưa có dữ liệu...';
     }
 
-    // === CHẤM ĐIỂM ===
     function scoreText(content, type, hasSatire) {
         let score = 0;
         if (type === 'lich') score += 1;
@@ -206,7 +205,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         return score;
     }
 
-    // === LƯU BÀI ===
     saveBtn.onclick = async () => {
         if (checkBan() || checkBypassBan()) return;
         if (checkInsult() || checkVNCH()) return;
@@ -232,7 +230,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         updateRanking();
     };
 
-    // === BAN, BYPASS, NORMALIZE, CHECK... (giữ nguyên) ===
     function triggerBypassBan() {
         localStorage.setItem('k_bypass_time', Date.now());
         bypassWarning.style.display = 'block';
@@ -353,7 +350,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // === KHỞI TẠO ===
     await loadScores();
     setInterval(loadScores, 10000);
 
