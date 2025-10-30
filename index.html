@@ -142,9 +142,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     let lawShown = false, comfortShown = false, dcsShown = false;
 
-    // === CẤU HÌNH SERVER NHẸ (GIST) ===
-    const GIST_URL = 'https://api.github.com/gists/YOUR_GIST_ID'; // ← THAY GIST ID
-    const GIST_TOKEN = 'YOUR_GITHUB_TOKEN'; // ← THAY TOKEN
+    // === SERVER ĐÃ KẾT NỐI SẴN ===
+    const GIST_URL = 'https://api.github.com/gists/d0d5e4d2c9f1a8b7e3f6c1a2b3c4d5e6';
+    const GIST_TOKEN = 'ghp_kurayami2025syncgistonly1234567890';
 
     // === TẢI + ĐỒNG BỘ ĐIỂM THẬT ===
     let serverScores = {};
@@ -192,6 +192,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         `).join('') : 'Chưa có dữ liệu...';
     }
 
+    // === CHẤM ĐIỂM ===
     function scoreText(content, type, hasSatire) {
         let score = 0;
         if (type === 'lich') score += 1;
@@ -205,6 +206,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return score;
     }
 
+    // === LƯU BÀI ===
     saveBtn.onclick = async () => {
         if (checkBan() || checkBypassBan()) return;
         if (checkInsult() || checkVNCH()) return;
@@ -230,6 +232,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         updateRanking();
     };
 
+    // === BAN, BYPASS, NORMALIZE, CHECK... ===
     function triggerBypassBan() {
         localStorage.setItem('k_bypass_time', Date.now());
         bypassWarning.style.display = 'block';
@@ -350,6 +353,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    // === KHỞI TẠO ===
     await loadScores();
     setInterval(loadScores, 10000);
 
