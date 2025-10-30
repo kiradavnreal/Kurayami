@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kurayami - Văn Sử</title>
+    <link rel="manifest" href="data:application/manifest+json,{
+        \"name\":\"Kurayami Văn Sử\",
+        \"short_name\":\"KVS\",
+        \"start_url\":\".\",
+        \"display\":\"standalone\",
+        \"background_color\":\"#0f0c29\",
+        \"theme_color\":\"#6e8efb\",
+        \"icons\":[{\"src\":\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%236e8efb'/%3E%3Ctext x='50' y='60' font-family='Arial' font-size='40' fill='white' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E\",\"sizes\":\"192x192\",\"type\":\"image/svg+xml\"}]
+    }">
+    <meta name="theme-color" content="#6e8efb">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+        body{background:#0f0c29;color:#e0e0e0;line-height:1.7;padding:20px;}
+        .container{max-width:1000px;margin:auto;background:#1a1a2e;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,.5);overflow:hidden;}
+        header{background:linear-gradient(135deg,#6e8efb,#a777e3);color:#fff;padding:25px;text-align:center;}
+        header h1{font-size:2rem;margin-bottom:8px;}
+        header p{font-size:1rem;opacity:.9;}
+        .section{padding:30px;border-bottom:1px solid #333;}
+        .section:last-child{border-bottom:none;}
+        h2{color:#6e8efb;margin-bottom:15px;font-size:1.5rem;border-left:4px solid #6e8efb;padding-left:12px;}
+        label{display:block;margin-bottom:8px;font-weight:600;color:#ccc;}
+        input[type=text],textarea,select{width:100%;padding:12px;margin-bottom:15px;border:1px solid #444;border-radius:8px;font-size:1rem;background:#222;color:#fff;transition:border .3s;}
+        input:focus,textarea:focus,select:focus{outline:none;border-color:#6e8efb;box-shadow:0 0 0 3px rgba(110,142,251,.2);}
+        textarea{min-height:300px;resize:vertical;line-height:1.8;}
+        .actions{text-align:right;margin-top:15px;}
+        button{background:#6e8efb;color:#fff;border:none;padding:12px 28px;border-radius:8px;font-size:1rem;cursor:pointer;transition:.3s;}
+        button:hover{background:#5a78e0;}
+        .msg{background:#331100;border:1px solid #8b5a00;color:#ffcc80;padding:15px;border-radius:8px;margin:15px 0;font-weight:600;font-style:italic;display:none;position:relative;}
+        .msg::before{content:"Kurayami:";font-weight:700;color:#ffb84d;}
+        .warning-box{background:#8b0000;border:2px solid #ff4444;color:#ffcc80;padding:15px;border-radius:8px;margin:15px 0;font-weight:700;text-align:center;display:none;animation:blink 1s infinite;}
+        @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.5;}}
+        .locked{pointer-events:none;opacity:0.3;}
+        .locked::after{content:"WEB VIẾT VĂN-SỬ T KHÔNG NẰM NGOÀI PHÁP LUẬT";position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#8b0000;color:#fff;padding:25px 40px;border-radius:12px;font-weight:700;z-index:9999;box-shadow:0 8px 25px rgba(0,0,0,.8);font-size:1.3rem;text-align:center;}
+        .locked::before{content:"Liên hệ Caelus Tenebron nhận 55 Robux hoặc 20 thẻ gà rán";display:block;margin-top:10px;color:#ffcc80;font-size:1rem;}
+        .warning{background:#331100;border:1px solid #663300;color:#ffcc66;padding:15px;border-radius:8px;margin:15px 0;font-weight:600;display:block;}
+        .satire-notice{background:#1a3a1a;border:1px solid #4a9a4a;color:#a0ffa0;padding:12px;border-radius:8px;margin:10px 0;font-weight:600;font-style:italic;}
+        .satire-notice::before{content:"Kurayami phát hành:";font-weight:700;color:#6eff6e;}
+        .ranking{background:#222;padding:15px;border-radius:8px;margin-top:20px;}
+        .ranking h3{color:#6e8efb;margin-bottom:10px;}
+        .rank-item{padding:8px 0;border-bottom:1px solid #444;}
+        .rank-item:last-child{border:none;}
+        .rank-name{font-weight:600;color:#6e8efb;}
+        .rank-total{font-weight:700;color:#a777e3;}
+        .sync-status{font-size:0.8rem;color:#6eff6e;margin-top:5px;}
+        footer{text-align:center;padding:20px;font-size:.9rem;color:#888;background:#111;}
+        .install-btn{background:#28a745;color:#fff;padding:10px 20px;border-radius:8px;cursor:pointer;margin:10px auto;display:block;width:fit-content;}
+        .contact-link{color:#6e8efb;text-decoration:underline;cursor:pointer;}
+        .contact-link:hover{color:#a777e3;}
+        .winner-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a2a44;color:#a0d2ff;padding:30px;border-radius:12px;font-weight:700;z-index:9999;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.8);max-width:90%;font-size:1.2rem;}
+        .winner-popup button{margin-top:15px;background:#6e8efb;color:#fff;padding:10px 20px;border:none;border-radius:8px;cursor:pointer;}
+    </style>
+</head>
+<body>
+<div class="container" id="main">
+    <header>
+        <h1>Kurayami - Văn Sử</h1>
+        <p>Điểm thật đồng bộ toàn quốc – Châm biếm VNCH +0.5 điểm</p>
+    </header>
+
+    <div class="section">
+        <h2>Viết Bài</h2>
+        <label for="username">Tên</label>
+        <input type="text" id="username" placeholder="Tên của bạn...">
+
+        <label for="type">Thể loại</label>
+        <select id="type">
+            <option value="lich">Lịch sử</option>
+            <option value="van">Văn học</option>
+        </select>
+
+        <label for="title">Tiêu đề</label>
+        <input type="text" id="title" placeholder="Tiêu đề...">
+
+        <label for="content">Nội dung</label>
+        <textarea id="content" placeholder="Viết ở đây..."></textarea>
+
+        <div id="kurayamiLaw" class="msg">Chỗ viết sử-văn của tao không nằm ngoài pháp luật.</div>
+        <div id="kurayamiComfort" class="msg">Đừng buồn nhé, mọi chuyện rồi sẽ ổn thôi. Kurayami luôn ở đây lắng nghe bạn.</div>
+        <div id="kurayamiNote" class="msg">Ôi bạn viết về Đảng Cộng sản Việt Nam ư? Tớ cảm kích trước sự học giỏi của bạn đó!</div>
+        <div id="bypassWarning" class="warning-box">Luật Kurayami tao đề ra mày sửa m ăn ban không bypass</div>
+
+        <div class="actions">
+            <button id="saveBtn">Lưu Bài</button>
+        </div>
+        <div id="installPrompt" class="install-btn" style="display:none;">Cài App</div>
+    </div>
+
+    <div class="section">
+        <h2>Bảng Xếp Hạng (Điểm thật – Đồng bộ toàn quốc)</h2>
+        <div class="ranking" id="ranking">
+            <h3>Top 5 + Tổng Điểm</h3>
+            <div id="rankList">Đang tải từ server...</div>
+            <div id="syncStatus" class="sync-status"></div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Quy Tắc</h2>
+        <div class="warning">
+            • Xúc phạm Bác Hồ, ĐCS → <strong>ban vĩnh viễn</strong><br>
+            • Viết VNCH (không châm biếm) → <strong>ban 24h</strong><br>
+            • Cố bypass châm biếm → <strong>ban 10 tiếng</strong><br>
+            • <strong>Châm biếm hợp pháp +0.5 điểm:</strong> chó VNCH, đu càng, hèn như chó, cali, con chó<br>
+            • <strong>Lịch:</strong> +1 điểm / bài<br>
+            • <strong>Văn:</strong> +điểm theo từ + dài<br>
+            • <strong>Top 1 tháng:</strong> Inbox <span class="contact-link" onclick="window.open('https://facebook.com/caelus.tenebron','_blank')">Caelus Tenebron</span>
+        </div>
+        <div class="satire-notice">
+            Kurayami phát hành – châm biếm VNCH hợp pháp +0.5 điểm.
+        </div>
+    </div>
+
+    <footer>© 2025 Kurayami – Văn Sử | Điểm thật đồng bộ toàn quốc</footer>
+</div>
+
+<div id="winnerPopup" class="winner-popup" style="display:none;">
+    <div id="winnerMessage"></div>
+    <button onclick="document.getElementById('winnerPopup').style.display='none'">Đóng</button>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    const titleEl = document.getElementById('title');
+    const contentEl = document.getElementById('content');
+    const typeEl = document.getElementById('type');
+    const saveBtn = document.getElementById('saveBtn');
+    const kurayamiLaw = document.getElementById('kurayamiLaw');
+    const kurayamiComfort = document.getElementById('kurayamiComfort');
+    const kurayamiNote = document.getElementById('kurayamiNote');
+    const winnerPopup = document.getElementById('winnerPopup');
+    const winnerMessage = document.getElementById('winnerMessage');
+    const bypassWarning = document.getElementById('bypassWarning');
+    const main = document.getElementById('main');
+    const rankList = document.getElementById('rankList');
+    const syncStatus = document.getElementById('syncStatus');
+
+    let lawShown = false, comfortShown = false, dcsShown = false;
+
+    // === CẤU HÌNH SERVER NHẸ (GIST) ===
+    const GIST_URL = 'https://api.github.com/gists/YOUR_GIST_ID'; // ← THAY GIST ID
+    const GIST_TOKEN = 'YOUR_GITHUB_TOKEN'; // ← THAY TOKEN
+
+    // === TẢI + ĐỒNG BỘ ĐIỂM THẬT ===
+    let serverScores = {};
+    async function loadScores() {
+        try {
+            const res = await fetch(GIST_URL);
+            const data = await res.json();
+            const file = data.files['kurayami_real_scores.json'];
+            if (file && file.content) {
+                serverScores = JSON.parse(file.content);
+                updateRanking();
+            }
+        } catch (e) {
+            syncStatus.textContent = 'Không kết nối server!';
+        }
+    }
+
+    async function saveScores() {
+        try {
+            syncStatus.textContent = 'Đang cập nhật server...';
+            await fetch(GIST_URL, {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': `token ${GIST_TOKEN}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    files: { 'kurayami_real_scores.json': { content: JSON.stringify(serverScores) } }
+                })
+            });
+            syncStatus.textContent = 'Đã cập nhật!';
+            setTimeout(() => syncStatus.textContent = '', 2000);
+        } catch (e) {
+            syncStatus.textContent = 'Lỗi server!';
+        }
+    }
+
+    function updateRanking() {
+        const top5 = Object.entries(serverScores).sort((a,b) => b[1] - a[1]).slice(0,5);
+        rankList.innerHTML = top5.length ? top5.map(([name, score], i) => `
+            <div class="rank-item">
+                <span class="rank-name">#${i+1} ${name}</span> - 
+                <span class="rank-total">${score.toFixed(1)} điểm</span>
+            </div>
+        `).join('') : 'Chưa có dữ liệu...';
+    }
+
+    // === CHẤM ĐIỂM ===
+    function scoreText(content, type, hasSatire) {
+        let score = 0;
+        if (type === 'lich') score += 1;
+        if (type === 'van') {
+            const words = content.trim().split(/\s+/).length;
+            const sents = (content.match(/[.!?]+/g)||[]).length;
+            const long = (content.match(/\b\w{7,}\b/g)||[]).length;
+            score += words * 0.1 + sents * 0.5 + long * 0.3;
+        }
+        if (hasSatire) score += 0.5;
+        return score;
+    }
+
+    // === LƯU BÀI ===
+    saveBtn.onclick = async () => {
+        if (checkBan() || checkBypassBan()) return;
+        if (checkInsult() || checkVNCH()) return;
+
+        const username = document.getElementById('username').value.trim();
+        if (!username) return alert('Nhập tên!');
+        localStorage.setItem('k_username', username);
+
+        const title = titleEl.value.trim();
+        const content = contentEl.value;
+        const type = typeEl.value;
+        if (!title || !content) return alert('Chưa hoàn thành!');
+
+        const txt = normalize(content);
+        const hasSatire = SATIRE_KEYS.some(w => txt.includes(w));
+        const score = scoreText(content, type, hasSatire);
+
+        serverScores[username] = (serverScores[username] || 0) + score;
+        await saveScores();
+
+        alert(`Đã lưu! +${score.toFixed(1)} điểm thật`);
+        titleEl.value = contentEl.value = '';
+        updateRanking();
+    };
+
+    // === BAN, BYPASS, NORMALIZE, CHECK... (giữ nguyên) ===
+    function triggerBypassBan() {
+        localStorage.setItem('k_bypass_time', Date.now());
+        bypassWarning.style.display = 'block';
+        main.classList.add('locked');
+        alert('Luật Kurayami tao đề ra mày sửa m ăn ban không bypass\nBị khóa 10 tiếng!');
+        setTimeout(() => {
+            bypassWarning.style.display = 'none';
+            main.classList.remove('locked');
+            localStorage.removeItem('k_bypass_time');
+        }, 10 * 60 * 60 * 1000);
+    }
+
+    function checkBypassBan() {
+        const t = localStorage.getItem('k_bypass_time');
+        if (t && (Date.now() - parseInt(t)) < 10 * 60 * 60 * 1000) {
+            main.classList.add('locked');
+            bypassWarning.style.display = 'block';
+            return true;
+        }
+        return false;
+    }
+
+    function applyBan(reason, permanent = false) {
+        localStorage.setItem('k_ban_time', Date.now());
+        localStorage.setItem('k_ban_reason', reason);
+        if (permanent) localStorage.setItem('k_perma_ban', 'true');
+        main.classList.add('locked');
+        alert(permanent ? `Bạn bị khóa VĨNH VIỄN: ${reason}` : `Bạn bị khóa 24h: ${reason}\n\nWEB VIẾT VĂN-SỬ T KHÔNG NẰM NGOÀI PHÁP LUẬT`);
+    }
+
+    function checkBan() {
+        if (localStorage.getItem('k_perma_ban') === 'true') {
+            main.classList.add('locked');
+            return true;
+        }
+        const t = localStorage.getItem('k_ban_time');
+        if (t && (Date.now() - parseInt(t)) < 24*60*60*1000) {
+            main.classList.add('locked');
+            alert(`Bạn bị khóa 24h: ${localStorage.getItem('k_ban_reason')||'vi phạm'}\n\nWEB VIẾT VĂN-SỬ T KHÔNG NẰM NGOÀI PHÁP LUẬT`);
+            return true;
+        }
+        return false;
+    }
+
+    function normalize(t) {
+        return t.toLowerCase()
+            .replace(/[àáảãạâầấẩẫậăằắẳẵặ]/g,'a')
+            .replace(/[èéẻẽẹêềếểễệ]/g,'e')
+            .replace(/[ìíỉĩị]/g,'i')
+            .replace(/[òóỏõọôồốổỗộơờớởỡợ]/g,'o')
+            .replace(/[ùúủũụưừứửữự]/g,'u')
+            .replace(/[ỳýỷỹỵ]/g,'y')
+            .replace(/đ/g,'d')
+            .replace(/[^a-z0-9\s]/g,' ')
+            .replace(/\s+/g,' ').trim();
+    }
+
+    const FORBIDDEN = ['ho chi minh','bac ho','hcm','vo nguyen giap','bac giap','dang cong san','dcs vn'];
+    const VNCH_KEYS = ['vnch','viet nam cong hoa','nam viet','vnc h','vn ch','v n c h','v.n.c.h'];
+    const SATIRE_KEYS = ['cho vnch','du cang','hen nhu cho','cali','con cho'];
+    const DCS_VN = ['dang cong san viet nam','dcs vn','dang cong san vn'];
+    const SAD = ['buon','sad','khoc','chia tay','co don','dau long','tan vo','that tinh'];
+
+    function checkInsult() {
+        const txt = normalize(titleEl.value + ' ' + contentEl.value);
+        if (FORBIDDEN.some(w => txt.includes(w))) {
+            titleEl.value = contentEl.value = '';
+            applyBan('xúc phạm huyền thoại', true);
+            return true;
+        }
+        return false;
+    }
+
+    function checkVNCH() {
+        const txt = normalize(titleEl.value + ' ' + contentEl.value);
+        const hasVNCH = VNCH_KEYS.some(w => txt.includes(w));
+        const hasSatire = SATIRE_KEYS.some(w => txt.includes(w));
+
+        if (hasVNCH && !hasSatire) {
+            titleEl.value = contentEl.value = '';
+            applyBan('viết VNCH không châm biếm', false);
+            return true;
+        }
+
+        if (hasVNCH && hasSatire) {
+            setTimeout(() => {
+                const newTxt = normalize(titleEl.value + ' ' + contentEl.value);
+                if (VNCH_KEYS.some(w => newTxt.includes(w)) && !SATIRE_KEYS.some(w => newTxt.includes(w))) {
+                    triggerBypassBan();
+                }
+            }, 1000);
+        }
+        return false;
+    }
+
+    function checkLaw() {
+        const txt = normalize(titleEl.value + ' ' + contentEl.value);
+        const lawWords = ['phap luat','luat','bien gioi','chinh tri','cach mang','dang','nha nuoc'];
+        if (lawWords.some(w => txt.includes(w)) && !lawShown) {
+            kurayamiLaw.style.display = 'block'; lawShown = true;
+            setTimeout(() => { kurayamiLaw.style.display = 'none'; lawShown = false; }, 8000);
+        }
+    }
+
+    function checkComfort() {
+        const title = normalize(titleEl.value);
+        if (SAD.some(w => title.includes(w)) && !comfortShown) {
+            kurayamiComfort.style.display = 'block'; comfortShown = true;
+            setTimeout(() => { kurayamiComfort.style.display = 'none'; comfortShown = false; }, 10000);
+        }
+    }
+
+    function checkDCS() {
+        const txt = normalize(titleEl.value + ' ' + contentEl.value);
+        if (DCS_VN.some(w => txt.includes(w)) && !dcsShown) {
+            kurayamiNote.style.display = 'block'; dcsShown = true;
+            setTimeout(() => { kurayamiNote.style.display = 'none'; dcsShown = false; }, 8000);
+        }
+    }
+
+    // === KHỞI TẠO ===
+    await loadScores();
+    setInterval(loadScores, 10000);
+
+    const savedName = localStorage.getItem('k_username');
+    if (savedName) document.getElementById('username').value = savedName;
+
+    setInterval(() => { checkLaw(); checkComfort(); checkDCS(); }, 200);
+
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; document.getElementById('installPrompt').style.display='block'; });
+    document.getElementById('installPrompt').addEventListener('click', () => { document.getElementById('installPrompt').style.display='none'; deferredPrompt.prompt(); });
+});
+</script>
+</body>
+</html>
